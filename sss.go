@@ -35,7 +35,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Print("Congrats!")
+	fmt.Println("Congrats!")
 	var bs, err = ioutil.ReadFile(*filename)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "problems found reading the file: %v", err)
@@ -44,5 +44,19 @@ func main() {
 
 	var base = big.Int{}
 	base.SetBytes(bs)
-	fmt.Printf("Data read: %v", base)
+	fmt.Printf("Data read: %v\n", base)
+
+	coefficients := make([]*big.Int, *minNumberToRecover - int64(1))
+	for i := range coefficients {
+		tmp, err := randomBigInt()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to generate random number")
+			os.Exit(1)
+		}
+		coefficients[i] = tmp
+	}
+
+	for i := range coefficients {
+		fmt.Printf("%v\n", coefficients[i])
+	}
 }
