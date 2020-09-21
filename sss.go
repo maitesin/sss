@@ -46,7 +46,7 @@ func main() {
 	base.SetBytes(bs)
 	fmt.Printf("Data read: %v\n", base)
 
-	coefficients := make([]*big.Int, *minNumberToRecover - int64(1))
+	coefficients := make([]*big.Int, *minNumberToRecover-int64(1))
 	for i := range coefficients {
 		tmp, err := randomBigInt()
 		if err != nil {
@@ -58,5 +58,13 @@ func main() {
 
 	for i := range coefficients {
 		fmt.Printf("%v\n", coefficients[i])
+	}
+
+	coeffs := make([]*big.Int, len(coefficients)+1)
+	coeffs[0] = &base
+	copy(coeffs[1:], coefficients)
+	fmt.Println("===================")
+	for i := range coeffs {
+		fmt.Printf("%d - %v\n", i, coeffs[i])
 	}
 }
